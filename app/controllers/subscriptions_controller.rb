@@ -6,7 +6,7 @@ class SubscriptionsController < ApplicationController
 
   def create
     @subscription = Subscription.new(subscription_params)
-    if @subscription.save
+    if @subscription.save_with_payment
       redirect_to @subscription, :notice => "Thank you for subscribing!"
     else
       render :new
@@ -20,6 +20,6 @@ class SubscriptionsController < ApplicationController
   private
   
   def subscription_params
-    params.require(:subscription).permit(:plan_id, :email)
+    params.require(:subscription).permit(:plan_id, :email, :stripe_card_token)
   end
 end
